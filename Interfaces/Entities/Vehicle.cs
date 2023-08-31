@@ -7,7 +7,7 @@ namespace Interfaces.Entities
 
         public Vehicle(string model)
         {
-            Model = model;
+            Model = model;            
         }
     }
 }

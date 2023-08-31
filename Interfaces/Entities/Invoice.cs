@@ -1,4 +1,5 @@
-﻿
+﻿using System.Globalization;
+
 namespace Interfaces.Entities
 {
     class Invoice
@@ -16,8 +17,17 @@ namespace Interfaces.Entities
         {
             get
             {
-                return BasicPayment * Tax;
+                return BasicPayment + Tax;
             }
-        } 
+        }
+
+        public override string ToString()
+        {
+            return
+                $"INVOICE:\n" +
+                $"Basic payment: {BasicPayment.ToString("F2", CultureInfo.InvariantCulture)}\n" +
+                $"Tax: {Tax.ToString("F2", CultureInfo.InvariantCulture)}\n" +
+                $"Total payment: {TotalPayment.ToString("F2", CultureInfo.InvariantCulture)}";
+        }
     }
 }

@@ -9,14 +9,22 @@ namespace Interfaces
     {
         static void Main(string[] args)
         {
-            DateTime d1 = new DateTime(2023, 08, 27, 12, 0, 0);
-            Console.WriteLine(d1.Day);
-            DateTime d2 = DateTime.Now;
-            Console.WriteLine(d2.Day);
-            TimeSpan t1 = d2.Subtract(d1);
-            Console.WriteLine(t1.TotalDays);
-            int aux =(int) Math.Ceiling(t1.TotalDays);
-            Console.WriteLine(aux);
+            Console.WriteLine("Enter rental data");
+            Console.Write("Car model: ");
+            string carModel = Console.ReadLine();
+            Console.Write("Pickup (dd/MM/yyyy hh:mm): ");
+            DateTime Pickup = DateTime.ParseExact(Console.ReadLine(), "dd/MM/yyyy HH:mm", CultureInfo.InvariantCulture);
+            Console.Write("Return (dd/MM/yyyy hh:mm): ");
+            DateTime Return = DateTime.ParseExact(Console.ReadLine(), "dd/MM/yyyy HH:mm", CultureInfo.InvariantCulture);
+            Vehicle vehicle = new Vehicle(carModel);
+            CarRental carRental = new CarRental(Pickup, Return, vehicle);
+            Console.Write("Enter price per hour: ");
+            double perHour = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
+            Console.Write("Enter price per day: ");
+            double perDay = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
+            RentalService rentalService = new RentalService(perHour, perDay);
+            rentalService.ProcessingInvoice(carRental);
+            Console.WriteLine(carRental.Invoice);
         }
     }
 }

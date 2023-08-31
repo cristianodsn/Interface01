@@ -6,9 +6,9 @@ namespace Interfaces.Service
 {
     class RentalService
     {
-        public double  PricePerHour { get; set; }
-        public double PricePerDay { get; set; }
-        private BrazilTaxService _brazilTaxService;
+        public double  PricePerHour { get; private set; }
+        public double PricePerDay { get; private set; }
+        private BrazilTaxService _brazilTaxService = new BrazilTaxService();
 
         public RentalService(double pricePerHour, double pricePerDay)
         {
@@ -18,13 +18,20 @@ namespace Interfaces.Service
 
         public void ProcessingInvoice(CarRental carRental)
         {
-            Invoice invoice;
-            TimeSpan t = carRental.Finish - carRental.Start;
-            if(t.TotalHours > 12)
-            {
+            TimeSpan duration = carRental.Finish - carRental.Start;
+            double basicPayment = 0.0;
 
-              
+            if(duration.TotalHours > 12)
+            {
+                basicPayment = Math.Ceiling(duration.TotalDays) * PricePerDay;
             }
+            else
+            {
+                basicPayment = Math.Ceiling(duration.TotalHours) * PricePerHour;
+            }
+
+            double tax = _brazilTaxService.Tax(basicPayment);
+            carRental.Invoice = new Invoice(basicPayment, tax);
         }
     }
 }

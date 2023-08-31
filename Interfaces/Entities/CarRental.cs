@@ -14,6 +14,6 @@ namespace Interfaces.Entities
             Start = start;
             Finish = finish;
             Vehicle = vehicle;            
-        }
+        }       
     }
 }
