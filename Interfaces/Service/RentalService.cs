@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Globalization;
 using Interfaces.Entities;
 
 namespace Interfaces.Service
@@ -8,12 +7,13 @@ namespace Interfaces.Service
     {
         public double  PricePerHour { get; private set; }
         public double PricePerDay { get; private set; }
-        private BrazilTaxService _brazilTaxService = new BrazilTaxService();
+        private ITaxService _TaxService;
 
-        public RentalService(double pricePerHour, double pricePerDay)
+        public RentalService(double pricePerHour, double pricePerDay, ITaxService taxService)
         {
             PricePerHour = pricePerHour;
             PricePerDay = pricePerDay;
+            _TaxService = taxService;
         }
 
         public void ProcessingInvoice(CarRental carRental)
@@ -30,7 +30,7 @@ namespace Interfaces.Service
                 basicPayment = Math.Ceiling(duration.TotalHours) * PricePerHour;
             }
 
-            double tax = _brazilTaxService.Tax(basicPayment);
+            double tax = _TaxService.Tax(basicPayment);
             carRental.Invoice = new Invoice(basicPayment, tax);
         }
     }

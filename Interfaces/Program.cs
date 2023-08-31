@@ -22,7 +22,7 @@ namespace Interfaces
             double perHour = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
             Console.Write("Enter price per day: ");
             double perDay = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
-            RentalService rentalService = new RentalService(perHour, perDay);
+            RentalService rentalService = new RentalService(perHour, perDay, new BrazilTaxService());
             rentalService.ProcessingInvoice(carRental);
             Console.WriteLine(carRental.Invoice);
         }
