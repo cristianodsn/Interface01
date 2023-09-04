@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 
 namespace Interfaces.Entities
 {
@@ -11,6 +12,12 @@ namespace Interfaces.Entities
         {
             DueDate = dueDate;
             Amount = amount;
+        }
+
+        public override string ToString()
+        {
+            return
+                DueDate.ToShortDateString() + " - $" + Amount.ToString("F2", CultureInfo.InvariantCulture);
         }
     }
 }

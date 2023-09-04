@@ -5,16 +5,23 @@ namespace Interfaces.Services
 {
     class ContractService
     {
-        public void ProcessContract(Contract contract, int months, IPaymentService paymentService)
+        private IPaymentService _paymentService;
+
+        public ContractService(IPaymentService paymentService)
+        {
+            _paymentService = paymentService;
+        }
+
+        public void ProcessContract(Contract contract, int months)
         {
             double valueInstallment = contract.TotalValue / months;          
             
             for(int i = 1; i <= months; i++)
             {
                 DateTime dueDate = contract.Date.AddMonths(i);
-                double interest = paymentService.Interest(valueInstallment, i);
-                double paymentFee = paymentService.PaymentFee(interest);
-                Installment installment = new Installment(dueDate, paymentFee);
+                double upDatevalue = _paymentService.Interest(valueInstallment, i) + valueInstallment;
+                double totalValue = _paymentService.PaymentFee(upDatevalue) + upDatevalue;  
+                Installment installment = new Installment(dueDate, totalValue);
                 contract.Installments.Add(installment);                  
             }
         }

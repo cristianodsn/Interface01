@@ -26,12 +26,9 @@ namespace Interfaces.Entities
             sb.AppendLine("Installments:");
             foreach(Installment obj in Installments)
             {
-                sb.Append(obj.DueDate.ToShortDateString().ToString());
-                sb.Append(" - ");
-                sb.Append("$");
-                sb.AppendLine(obj.Amount.ToString("F2", CultureInfo.InvariantCulture));
+                sb.AppendLine(obj.ToString());
             }
-            return sb.ToString();
+            return sb.ToString(); 
         }
     }
 }

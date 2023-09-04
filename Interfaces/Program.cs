@@ -19,8 +19,8 @@ namespace Interfaces
             Contract contract = new Contract(number, date, contractValue);
             Console.Write("Enter number of installments: ");
             int installmentsNumber = int.Parse(Console.ReadLine());
-            ContractService contractService =  new ContractService();
-            contractService.ProcessContract(contract, installmentsNumber, new PaypalService());
+            ContractService contractService =  new ContractService(new PaypalService());
+            contractService.ProcessContract(contract, installmentsNumber);
             Console.WriteLine(contract);
         }
     }
